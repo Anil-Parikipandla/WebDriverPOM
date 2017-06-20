@@ -13,7 +13,7 @@ public class HomePage extends BasePage
 	private static final String APPLICATION_URL = "https://www.emirates.com/uk/english/";
 	private static final int 	NO_OF_CHILDREN = 1;
 	private DatePicker pick_a_date;
-
+	
 	@FindBy(xpath = "//div[@id='navSecondary']//li/a[contains(text(), 'Book a flight')]")
 	private WebElement book_A_FlightBtn;
 
