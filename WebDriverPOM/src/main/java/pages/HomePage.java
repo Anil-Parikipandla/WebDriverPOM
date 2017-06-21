@@ -1,5 +1,6 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,9 +11,9 @@ import utils.DatePicker;
 
 public class HomePage extends BasePage
 {
-	private static final String APPLICATION_URL = "https://www.emirates.com/uk/english/";
-	private static final int 	NO_OF_CHILDREN = 1;
+//	private static final String APPLICATION_URL = "https://www.emirates.com/uk/english/";
 	private DatePicker pick_a_date;
+	private WebElement no_Of_Children;
 	
 	@FindBy(xpath = "//div[@id='navSecondary']//li/a[contains(text(), 'Book a flight')]")
 	private WebElement book_A_FlightBtn;
@@ -36,21 +37,31 @@ public class HomePage extends BasePage
 	private WebElement children_Link;
 
 	//This Xpath is not valid using FindBy
-	@FindBy(xpath = "//div[@id='navSecondary']//ul[@class='chosen-results']/li[@text='"+NO_OF_CHILDREN +"']")
-	private WebElement no_Of_Children;
+//	@FindBy(xpath = "//div[@id='navSecondary']//ul[@class='chosen-results']/li[@text='"+NO_OF_CHILDREN +"']")
+//	private WebElement no_Of_Children;
+	
+	
 
 	@FindBy(xpath = "//input[@id='btnStartBooking']")
 	private WebElement find_Flights_Button;
+	
+	@FindBy(xpath = "//a[@aria-label='Select the number of children aged between two and 11 years of age - 1  selected']//span")
+	private WebElement get_value_from_number_of_children;
 
 	public HomePage(WebDriver driver){
 		super(driver);
 	}
 
-	public void open_Application()
+/*	public void open_Application(String application_url)
 	{
-		getDriver().get(APPLICATION_URL);
+		getDriver().get(application_url);
 	}
-
+*/
+	public WebElement get_no_of_children(WebDriver driver, int children){
+		no_Of_Children = driver.findElement(By.xpath("//div[@id='navSecondary']//ul[@class='chosen-results']/li[@text='"+children +"']"));
+		return no_Of_Children;
+	}
+	
 	public void open_Flight_Booking_Window(){
 		book_A_FlightBtn.click();
 	}
@@ -75,8 +86,8 @@ public class HomePage extends BasePage
 		return no_Of_Adults.getText();
 	}
 	
-	public void add_Children(){
-//		this.NO_OF_CHILDREN = noOfChildren;
+	public void add_Children(int children){
+		get_no_of_children(webDriver, children);
 		add_children_Link.click();
 		children_Link.click();
 		no_Of_Children.click();
@@ -87,7 +98,13 @@ public class HomePage extends BasePage
 		return new FlightSearchResultsPage(webDriver);
 	}
 	
+	public WebElement get_expected_from_city(){
+		return departure_Airport;
+	}
 	
-
+	public WebElement get_expected_to_city(){
+		return arrival_Airport;
+	}
+	
 }
 

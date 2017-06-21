@@ -6,7 +6,7 @@ import org.openqa.selenium.support.PageFactory;
 
 public abstract class BasePage {
 
-    protected final WebDriver webDriver;
+    protected WebDriver webDriver;
     
     public BasePage(WebDriver webDriver)
     {
