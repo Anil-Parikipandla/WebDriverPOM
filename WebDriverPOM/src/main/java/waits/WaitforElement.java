@@ -8,9 +8,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class WaitforElement {
 
-	public static void waitforElement(WebDriver driver, String str ){
+	public static void waitforElement(WebDriver driver, WebElement element ){
 		WebDriverWait wait = new WebDriverWait(driver, 10);
-		wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(str))));
+		wait.until(ExpectedConditions.elementToBeClickable(element));
 		System.out.println("Element is clickable");
 	}
 	
@@ -23,4 +23,5 @@ public class WaitforElement {
 		WebDriverWait wait = new WebDriverWait(driver, 10);
 		wait.until(ExpectedConditions.not(ExpectedConditions.stalenessOf(driver.findElement(By.xpath(strXpath)))));
 	}
+	
 }

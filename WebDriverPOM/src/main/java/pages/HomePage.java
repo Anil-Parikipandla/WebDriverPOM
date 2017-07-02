@@ -8,6 +8,7 @@ import org.openqa.selenium.support.FindBy;
 
 import base.BasePage;
 import utils.DatePicker;
+import waits.WaitforElement;
 
 public class HomePage extends BasePage
 {
@@ -67,9 +68,11 @@ public class HomePage extends BasePage
 	}
 
 	public void enter_Origin_And_Destination(String origin, String destination){
+		WaitforElement.waitforElement(webDriver, departure_Airport);
 		departure_Airport.clear();
 		departure_Airport.sendKeys(origin);
 		departure_Airport.sendKeys(Keys.ENTER);
+		WaitforElement.waitforElement(webDriver, arrival_Airport);
 		arrival_Airport.sendKeys(destination);
 		arrival_Airport.sendKeys(Keys.ENTER);
 	}
@@ -87,9 +90,9 @@ public class HomePage extends BasePage
 	}
 	
 	public void add_Children(int children){
-		get_no_of_children(webDriver, children);
 		add_children_Link.click();
 		children_Link.click();
+		get_no_of_children(webDriver, children);
 		no_Of_Children.click();
 	}
 	

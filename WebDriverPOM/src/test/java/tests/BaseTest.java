@@ -1,5 +1,7 @@
 package tests;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.logging.log4j.LogManager;
@@ -8,13 +10,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeTest;
 
 import pages.FlightSearchResultsPage;
 import pages.HomePage;
 
 public class BaseTest {
 	protected static final String APPLICATION_URL = "https://www.emirates.com/uk/english/";
-	protected static final String EXPECTED_PAGE_TITLE = "Emirates flights â€“ Book a flight, browse our flight offers and explore the Emirates Experience";
+	protected static final String EXPECTED_PAGE_TITLE = "Emirates flights – Book a flight, browse our flight offers and explore the Emirates Experience";
 	protected static final String EXPECTED_FROM_CITY_NAME = "St Petersburg (LED)"; 
 	protected static final String EXPECTED_TO_CITY_NAME = "Dubai (DXB)"; 
 	protected static final String EXPECTED_DEPARTURE_DATE = "14.07.2017";
@@ -23,6 +26,10 @@ public class BaseTest {
 	protected static final int EXPECTED_NO_OF_CHILDREN = 1;
 	protected static final String EXPECTED_SEARCH_RESULTS_PAGE_HEADER = "Make a booking";
 	protected static final String EXPECTED_CONNECTION_IN = "via DME";
+	protected static final String EXPECTED_DEPARTING_DATE = "14 July 2017";
+	protected static final String EXPECTED_RETURNING_DATE = "15 July 2017";
+	protected static ArrayList<String> EXPECTED_FIRST_OUTBOUND_FLIGHT_PRICES = new ArrayList<String>();
+	protected static ArrayList<String> EXPECTED_FIRST_RETURN_FLIGHT_PRICES = new ArrayList<String>();
 	
 	protected WebDriver driver;
 	protected HomePage Homepage;
@@ -57,6 +64,27 @@ public class BaseTest {
 	
 	@BeforeClass(dependsOnMethods = "add_Implicit_Wait", description = "create and return Homepage")
 	public HomePage get_HomePage(){
-		return new HomePage(driver);
+		Homepage = new HomePage(driver);
+		return Homepage;
+	}
+	
+	@BeforeTest
+	public void DataSetup(){
+		setEXPECTED_FIRST_OUTBOUND_FLIGHT_PRICES();
+		setEXPECTED_FIRST_RETURN_FLIGHT_PRICES();
+	}
+	
+	//@AfterClass
+	public void closeBrowser(){
+		driver.close();
+		driver.quit();
+	}
+	
+	public static void setEXPECTED_FIRST_OUTBOUND_FLIGHT_PRICES() {
+		EXPECTED_FIRST_OUTBOUND_FLIGHT_PRICES.addAll(Arrays.asList("46","864"," 64","354"));
+	}
+	
+	public static void setEXPECTED_FIRST_RETURN_FLIGHT_PRICES() {
+		EXPECTED_FIRST_RETURN_FLIGHT_PRICES.addAll(Arrays.asList("37,216,57,586,171,979"));
 	}
 }

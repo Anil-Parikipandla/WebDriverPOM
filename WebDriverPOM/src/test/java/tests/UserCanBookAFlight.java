@@ -1,5 +1,6 @@
 package tests;
 
+import java.util.ArrayList;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -14,9 +15,10 @@ public class UserCanBookAFlight extends BaseTest {
 	private static String ACTUAL_SEARCH_RESULTS_PAGE_HEADER = "";
 	private static String ACTUAL_DEPARTING_DATE = "";
 	private static String ACTUAL_RETURNING_DATE = "";
-	private static String EXPECTED_DEPARTING_DATE = "14 July 2017";
-	private static String EXPECTED_RETURNING_DATE = "15 July 2017";
+	private static ArrayList<String> ACTUAL_FIRST_OUTBOUND_FLIGHT_PRICES = new ArrayList<String>();
+	private static ArrayList<String> ACTUAL_FIRST_RETURN_FLIGHT_PRICES = new ArrayList<String>();
 
+	
 	@Test	
 	public void sampleTest(){
 		log.info("This is a sample Logger");
@@ -66,9 +68,19 @@ public class UserCanBookAFlight extends BaseTest {
 		
 		//verify the flight has connection to Moscow
 		for(WebElement i : flight_Search_Results_Page.get_list_of_flights()){
+			String List = i.getText();
+			if(!List.isEmpty()){
 			Assert.assertEquals(i.getText().substring(0, 7), EXPECTED_CONNECTION_IN);
+			}
 		}
 		
+		//verify the different prices available for Outbound
+		ACTUAL_FIRST_OUTBOUND_FLIGHT_PRICES.addAll(flight_Search_Results_Page.get_Flight_Prices_Outbound());
+		Assert.assertEquals(ACTUAL_FIRST_OUTBOUND_FLIGHT_PRICES.toString().replaceAll(" ", ""), EXPECTED_FIRST_OUTBOUND_FLIGHT_PRICES.toString().replaceAll(" ", ""));
+		
+		//verify the different prices available for Return
+		ACTUAL_FIRST_RETURN_FLIGHT_PRICES.addAll(flight_Search_Results_Page.get_Flight_Prices_return());
+		Assert.assertEquals(ACTUAL_FIRST_RETURN_FLIGHT_PRICES.toString().replaceAll(" ", ""), EXPECTED_FIRST_RETURN_FLIGHT_PRICES.toString().replaceAll(" ", ""));
 		
 		
 		
